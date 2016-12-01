@@ -8,11 +8,11 @@ input = "L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1,
 @old_points = []
 
 def direction_for(number)
-	@directions[number % 4]
+  @directions[number % 4]
 end
 
 def turn_right
-	@direction += 1
+  @direction += 1
 end
 
 def turn_left
@@ -20,45 +20,45 @@ def turn_left
 end
 
 def move(n)
-	n.times do
-	  @map[direction_for(@direction)] += 1
-		check_old_points
-		record_point
-	end
+  n.times do
+    @map[direction_for(@direction)] += 1
+    check_old_points
+    record_point
+  end
 end
 
 def record_point
-	@old_points << map_to_point
+  @old_points << map_to_point
 end
 
 def calculate_blocks
-	horizontal = (@map[:east] - @map[:west]).abs
-	vertical = (@map[:north] - @map[:south]).abs
+  horizontal = (@map[:east] - @map[:west]).abs
+  vertical = (@map[:north] - @map[:south]).abs
   horizontal + vertical
 end
 
 def check_old_points
-	if @old_points.include? map_to_point
-		@first_point_distance ||= calculate_blocks
-	end
+  if @old_points.include? map_to_point
+    @first_point_distance ||= calculate_blocks
+  end
 end
 
 def map_to_point
-	[@map[:east] - @map[:west], @map[:north] - @map[:south]]
+  [@map[:east] - @map[:west], @map[:north] - @map[:south]]
 end
 
 def parse_input(input)
   instructions = input.split(", ")
   instructions.each do |instruction|
-		dir = instruction[0]
-		amount = instruction[1..-1]
-		if dir == 'R'
-			turn_right
-		else
-			turn_left
-		end
-		move(amount.to_i)
-	end
+    dir = instruction[0]
+    amount = instruction[1..-1]
+    if dir == 'R'
+      turn_right
+    else
+      turn_left
+    end
+    move(amount.to_i)
+  end
 end
 
 parse_input(input)
@@ -66,7 +66,7 @@ parse_input(input)
 puts "Ended up #{calculate_blocks} blocks away from start"
 
 if @first_point_distance
-	puts "First point visited twice had distance: #{@first_point_distance}"
+  puts "First point visited twice had distance: #{@first_point_distance}"
 else
-	puts "No point was visited twice"
+  puts "No point was visited twice"
 end
